@@ -101,14 +101,14 @@ namespace AuctionHouseApp.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    if (!await _roleManager.RoleExistsAsync(SD.GamerUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.GamerUser));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(SD.ManagerUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.ManagerUser));
-                    }
+                    //if (!await _roleManager.RoleExistsAsync(SD.GamerUser))
+                    //{
+                    //    await _roleManager.CreateAsync(new IdentityRole(SD.GamerUser));
+                    //}
+                    //if (!await _roleManager.RoleExistsAsync(SD.ManagerUser))
+                    //{
+                    //    await _roleManager.CreateAsync(new IdentityRole(SD.ManagerUser));
+                    //}
 
                     if (role == SD.ManagerUser)
                     {

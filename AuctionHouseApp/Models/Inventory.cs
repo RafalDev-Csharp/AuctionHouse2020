@@ -12,7 +12,7 @@ namespace AuctionHouseApp.Models
     {
         public int Id { get; set; }
 
-        [Range(1, 999, ErrorMessage = "Price should be greater than 1 and smaller then 1000")]
+        [Range(1, 999, ErrorMessage = "Count should be between 1 and 999")]
         public int Count { get; set; }
         public string UserName { get; set; }
 

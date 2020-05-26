@@ -42,7 +42,8 @@ namespace AuctionHouseApp
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            
+
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.AddSingleton<IEmailSender, EmailSender>();
@@ -73,7 +74,7 @@ namespace AuctionHouseApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -86,16 +87,17 @@ namespace AuctionHouseApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
+            dbInitializer.Initialize();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseRouting();
-
-            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
-            
+            app.UseCookiePolicy();
             app.UseSession();
+            app.UseAuthentication();
+            app.UseRouting(); 
 
 
-            //app.UseCookiePolicy();
             //app.UseRouting();
 
             app.UseAuthentication();
